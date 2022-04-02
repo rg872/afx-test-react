@@ -1,13 +1,11 @@
-import { Action, AnyAction, combineReducers } from "@reduxjs/toolkit";
+import { AnyAction, combineReducers } from "@reduxjs/toolkit";
 import { configureStore } from "@reduxjs/toolkit";
 import { combineEpics, createEpicMiddleware, Epic } from "redux-observable";
-import uiReducer from "./ui/ui.slice";
-import catReducer from "./cats/cats.slice";
-import { getCatFactEpic } from "./cats/cats.epic";
+import { getPlacePredictionsEpic } from "./place/place.epic";
+import placeReducer from "./place/place.slice";
 
 const rootReducer = combineReducers({
-  ui: uiReducer,
-  cat: catReducer,
+  place: placeReducer,
 });
 
 type State = ReturnType<typeof rootReducer>;
@@ -24,6 +22,6 @@ export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 export type AppEpic = Epic<AnyAction, AnyAction, RootState>;
 
-const rootEpic = combineEpics(getCatFactEpic);
+const rootEpic = combineEpics(getPlacePredictionsEpic);
 
 epicMiddleware.run(rootEpic);
